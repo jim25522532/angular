@@ -8,6 +8,7 @@ import { PostsComponent } from './posts/posts.component';
   imports: [
     CommonModule
   ],
-  declarations: [PostComponent, EditorComponent, PostsComponent]
+  declarations: [PostComponent, EditorComponent, PostsComponent],
+  exports: [PostsComponent, PostComponent , EditorComponent]
 })
 export class PostsModule { }
