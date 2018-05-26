@@ -13,9 +13,7 @@ import { PostsModule } from './posts/posts.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    LayoutModule,
-    LoginModule,
-    PostsModule
+    LayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

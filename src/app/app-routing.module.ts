@@ -10,29 +10,11 @@ const routes: Routes = [
   {
     path: '',
     component: MainComponent,
-    children: [
-      {
-        path: '',
-        redirectTo: 'posts',
-        pathMatch: 'full' // prefix full 設定路由跳轉
-      },
-      {
-        path: 'posts',
-        component: PostsComponent
-      },
-      {
-        path: 'post/:id',
-        component: PostComponent
-      },
-      {
-        path: 'create',
-        component: EditorComponent
-      }
-    ]
+    loadChildren: './posts/posts.module#PostsModule'
   },
   {
     path: 'login',
-    component: AuthComponent
+    loadChildren: './login/login.module#LoginModule'
   }
 ];
 
