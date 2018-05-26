@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormArray } from '@angular/forms';
+import { FormGroup, FormControl, FormArray, Validator, Validators, AbstractControl } from '@angular/forms';
+import { validateConfig } from '@angular/router/src/config';
 
 @Component({
   selector: 'app-editor',
@@ -9,8 +10,11 @@ import { FormGroup, FormControl, FormArray } from '@angular/forms';
 export class EditorComponent implements OnInit {
 
   post = new FormGroup({
-    title: new FormControl('default title'),
-    body: new FormControl(),
+    title: new FormControl('default title', Validators.required),
+    body: new FormControl(null, [
+      Validators.required,
+      Validators.minLength(10)
+    ]),
     tags: new FormArray([
       new FormControl('Angular'),
       new FormControl('HTML'),
@@ -29,12 +33,23 @@ export class EditorComponent implements OnInit {
   }
 
   removeTag(index: number) {
+
     this.tags.removeAt(index);
   }
 
-  createPost(){
+  createPost() {
+
     console.log(this.post.value);
   }
+
+  get title(): AbstractControl {
+    return this.post.get('title');
+  }
+
+  get body(): AbstractControl {
+    return this.post.get('body');
+  }
+
   constructor() { }
 
   ngOnInit() {

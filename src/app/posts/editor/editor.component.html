@@ -6,20 +6,27 @@
         <form [formGroup]="post">
           <fieldset class="form-group">
             <input class="form-control form-control-lg" type="text" placeholder="Post Title" formControlName="title">
+            <div *ngIf="title.dirty && title.invalid">
+              <span *ngIf="title.errors['required']">請輸入標題</span>
+            </div>
           </fieldset>
           <fieldset class="form-group">
             <textarea class="form-control" rows="8" placeholder="Write your post (in markdown)" formControlName="body"></textarea>
+            <div *ngIf="body.dirty && body.invalid">
+              <span *ngIf="body.errors['required']">請輸入內文</span>
+              <span *ngIf="body.errors['minlength']">內文至少 10 個字</span>
+            </div>
           </fieldset>
           <fieldset class="form-group">
             <input class="form-control" type="text" placeholder="Enter tags"
             #tag
-            (key.enter)="addTag(tag.value)">
+            (keyup.enter)="addTag(tag.value)">
             <div class="tag-list" formArrayName="tags">
-              <span class="label label-pill label-default" *ngFor="let tag of tags.controls">
-                <i class="ion-close-round"></i> {{ tag.value }}</span>
+              <span class="label label-pill label-default" *ngFor="let tag of tags.controls; let tagIndex = index">
+                <i class="ion-close-round" (click)="removeTag(tagIndex)"></i> {{ tag.value }} {{ tagIndex }}</span>
             </div>
           </fieldset>
-          <button type="button" class="btn btn-lg btn-primary pull-xs-right" (click)="createPost()">
+          <button type="button" class="btn btn-lg btn-primary pull-xs-right" (click)="createPost()" [disabled]="post.invalid">
             Create Post
           </button>
         </form>
